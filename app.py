@@ -153,6 +153,10 @@ async def get_analytics():
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
+    @app.get("/")
+    async def root():
+        return {"message": "Fitness Tracker API is running."}
+
 
 @app.delete("/workouts/{workout_id}")
 async def delete_workout(workout_id: int):
