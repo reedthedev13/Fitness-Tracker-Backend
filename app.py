@@ -22,19 +22,23 @@ DATABASE_URL = os.path.join(os.path.dirname(__file__), "fitness.db")
 
 
 def init_db():
-    with get_db_connection() as conn:
-        cursor = conn.cursor()
-        cursor.execute("""
-            CREATE TABLE IF NOT EXISTS workouts (
-                id INTEGER PRIMARY KEY AUTOINCREMENT,
-                type TEXT NOT NULL,
-                date TEXT NOT NULL,
-                reps INTEGER NOT NULL,
-                sets INTEGER NOT NULL,
-                weight REAL
-            )
-        """)
-        conn.commit()
+    try:
+        with get_db_connection() as conn:
+            cursor = conn.cursor()
+            cursor.execute("""
+                CREATE TABLE IF NOT EXISTS workouts (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    type TEXT NOT NULL,
+                    date TEXT NOT NULL,
+                    reps INTEGER NOT NULL,
+                    sets INTEGER NOT NULL,
+                    weight REAL
+                )
+            """)
+            conn.commit()
+            print("✅ Database initialized successfully")
+    except Exception as e:
+        print("❌ DB init error:", e)
 
 
 @contextmanager
