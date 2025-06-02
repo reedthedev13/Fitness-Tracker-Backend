@@ -8,18 +8,17 @@ from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
 
-
-origins = [
-    "https://fitess-tracker.vercel.app",
-]
-
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=origins,
+    allow_origins=[
+        "http://localhost:5173",
+        "https://fitess-tracker.vercel.app",
+    ],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
 
 DATABASE_URL = "fitness.db"
 
