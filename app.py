@@ -5,6 +5,7 @@ from typing import List, Optional
 import sqlite3
 from contextlib import contextmanager
 from fastapi.middleware.cors import CORSMiddleware
+import os
 
 app = FastAPI()
 
@@ -17,7 +18,7 @@ app.add_middleware(
 )
 
 
-DATABASE_URL = "fitness.db"
+DATABASE_URL = os.path.join(os.path.dirname(__file__), "fitness.db")
 
 
 def init_db():
