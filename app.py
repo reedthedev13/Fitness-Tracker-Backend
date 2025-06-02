@@ -167,14 +167,11 @@ async def delete_workout(workout_id: int):
     try:
         with get_db_connection() as conn:
             cursor = conn.cursor()
-
             cursor.execute("SELECT id FROM workouts WHERE id = ?", (workout_id,))
             if not cursor.fetchone():
                 raise HTTPException(status_code=404, detail="Workout not found")
             cursor.execute("DELETE FROM workouts WHERE id = ?", (workout_id,))
             conn.commit()
             return {"status": "success", "message": "Workout deleted"}
-
     except Exception as e:
-        conn.rollback()
         raise HTTPException(status_code=500, detail=str(e))
