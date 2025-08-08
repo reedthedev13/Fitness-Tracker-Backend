@@ -11,7 +11,7 @@ app = FastAPI()
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["https://fitess-tracker.vercel.app"],
+    allow_origins=["http://localhost:5173", "https://fitness-tracker.vercel.app"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -80,7 +80,7 @@ async def add_workout(workout: Workouts):
                 """
                 INSERT INTO workouts (type, date, reps, sets, weight)
                 VALUES (?, ?, ?, ?, ?)
-            """,
+                """,
                 (
                     workout.type,
                     workout.date.isoformat(),
@@ -157,9 +157,10 @@ async def get_analytics():
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
-    @app.get("/")
-    async def root():
-        return {"message": "Fitness Tracker API is running."}
+
+@app.get("/")
+async def root():
+    return {"message": "Fitness Tracker API is running."}
 
 
 @app.delete("/workouts/{workout_id}")
