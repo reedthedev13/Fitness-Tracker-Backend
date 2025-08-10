@@ -11,7 +11,7 @@ app = FastAPI()
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:5173", "https://fitness-tracker.vercel.app"],
+    allow_origins=["https://fitness-tracker.vercel.app", "localhost:5173"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
