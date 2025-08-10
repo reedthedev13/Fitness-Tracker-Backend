@@ -165,14 +165,19 @@ async def root():
 
 @app.delete("/workouts/{workout_id}")
 async def delete_workout(workout_id: int):
+    print(f"Attempting to delete workout {workout_id}")
     try:
         with get_db_connection() as conn:
             cursor = conn.cursor()
             cursor.execute("SELECT id FROM workouts WHERE id = ?", (workout_id,))
-            if not cursor.fetchone():
+            row = cursor.fetchone()
+            print(f"Found workout? {row}")
+            if not row:
                 raise HTTPException(status_code=404, detail="Workout not found")
             cursor.execute("DELETE FROM workouts WHERE id = ?", (workout_id,))
             conn.commit()
+            print(f"Deleted workout {workout_id}")
             return {"status": "success", "message": "Workout deleted"}
     except Exception as e:
+        print(f"Exception: {e}")
         raise HTTPException(status_code=500, detail=str(e))
